@@ -12,18 +12,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true) // Kích hoạt @PreAuthorize
+@EnableGlobalMethodSecurity(prePostEnabled = true) // Enable @PreAuthorize for method-level security
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
-            // Yêu cầu xác thực cho tất cả endpoint trong /users
-            .requestMatchers("/login/**")
-            .authenticated() 
+        http
+            .csrf().disable() // Disable CSRF for simplicity (not recommended for production)
+            .authorizeHttpRequests()
+            .requestMatchers("/getBuyCart").hasRole("ADMIN") // Only users with the USER role can access
+            .requestMatchers("/admin/**").hasRole("ADMIN") // Only admins can access /admin/** endpoints
+            .anyRequest().permitAll() // Allow all other requests
             .and()
-            .httpBasic(); // Sử dụng xác thực HTTP Basic
+            .httpBasic(); // Use basic authentication for simplicity
+
         return http.build();
     }
 
@@ -36,11 +38,11 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails admin = User.withUsername("admin")
                 .password(passwordEncoder().encode("admin123"))
-                .roles("ADMIN") // Vai trò ADMIN
+                .roles("ADMIN") // Role ADMIN
                 .build();
         UserDetails user = User.withUsername("user")
                 .password(passwordEncoder().encode("user123"))
-                .roles("USER") // Vai trò USER
+                .roles("USER") // Role USER
                 .build();
         return new InMemoryUserDetailsManager(admin, user);
     }
