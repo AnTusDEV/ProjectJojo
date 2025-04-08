@@ -1,6 +1,6 @@
 package com.example.ProjectJojo.controller;
 
-import com.example.ProjectJojo.dto.MenuResponseDTO;
+// import com.example.ProjectJojo.dto.MenuResponseDTO;
 import com.example.ProjectJojo.entity.Menu;
 import com.example.ProjectJojo.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +16,21 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public List<MenuResponseDTO> getMenus() { 
-        List<Menu> menus = menuService.getAllMenus();        return menus.stream().map(this::convertToDTO).toList(); // Map entities to DTOs
+    public List<Menu> getMenus() { 
+        List<Menu> menus = menuService.getAllMenus();   
+        return menus.stream().map(this::convertToDTO).toList();
     }
 
-    private MenuResponseDTO convertToDTO(Menu menu) {
-        MenuResponseDTO dto = new MenuResponseDTO();
+    private Menu convertToDTO(Menu menu) {
+        Menu dto = new Menu();
         dto.setId(menu.getId());
         dto.setName(menu.getName());
         dto.setDescription(menu.getDescription());
+        dto.setSubMenus(menu.getSubMenus()); 
         // Assuming Menu has a `getSubMenus()` method for hierarchical structure
-        if (menu.getSubMenus() != null) {
-            dto.setSubMenus(menu.getSubMenus().stream().map(this::convertToDTO).toList());
-        }
+        // if (menu.getSubMenus() != null) {
+        //     dto.setSubMenus(menu.getSubMenus().stream().map(this::convertToDTO).toList());
+        // }
         return dto;
     }
 
