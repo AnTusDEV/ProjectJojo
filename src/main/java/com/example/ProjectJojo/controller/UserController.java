@@ -52,8 +52,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         try {
-            User user = userService.getUserById(id);
-
+            User user = userService.getUserById(id); 
             // Định dạng giá tiền (không có ký hiệu "₫")
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             Map<String, Object> userMap = new LinkedHashMap<>(); // Sử dụng LinkedHashMap để duy trì thứ tự
