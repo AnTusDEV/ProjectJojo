@@ -4,8 +4,8 @@ import com.example.ProjectJojo.entity.Menu;
 import com.example.ProjectJojo.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/menu")
@@ -16,34 +16,19 @@ public class MenuController {
 
     @GetMapping
     public List<Menu> getMenus() {
-        List<Menu> menus = fetchMenusFromDatabase();
-        return convertToDTOList(menus);
-        
+        List<Menu> menus = menuService.getAllMenus();
+        return menus.stream().map(this::convertToDTO).toList();
     }
 
     private Menu convertToDTO(Menu menu) {
         Menu dto = new Menu();
-        dto.setId(menu.getId());
-        dto.setName(menu.getName());
-        dto.setDescription(menu.getDescription());
-        if (menu.getSubmenu() != null) {
-            System.out.println(dto.getSubMenus());
-            dto.setSubMenus(menu.getSubmenu().stream()
-                    .map(this::convertToDTO)
-                    .collect(Collectors.toList()));
+        if (menu.getSubMenu() != null) {
+            dto.setId(menu.getId());
+            dto.setName(menu.getName());
+            dto.setDescription(menu.getDescription());
+            dto.setSubMenu(menu.getSubMenu().stream().map(this::convertToDTO).toList());
         }
         return dto;
-    }
-
-    public List<Menu> convertToDTOList(List<Menu> menus) {
-        return menus.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    private List<Menu> fetchMenusFromDatabase() {
-        // Mock or actual database call
-        return List.of(); // Replace with actual logic
     }
 
     @PostMapping

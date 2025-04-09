@@ -18,13 +18,5 @@ public class Menu {
 
     @OneToMany 
     @JoinColumn(name = "submenu")  
-    private List<Menu> subMenus;
-
-    public List<Menu> getSubmenu() {
-        return subMenus;
-    }
-
-    public void setSubmenu(List<Menu> subMenus) {
-        this.subMenus = subMenus;
-    }
+    private List<Menu> subMenu; 
 }
