@@ -21,20 +21,20 @@ public class MenuService {
         return menuRepository.save(menu);
     }
 
-    // public Menu updateMenu(Long id, Menu updatedMenu) {
-    //     Menu existingMenu = menuRepository.findById(id)
-    //             .orElseThrow(() -> new RuntimeException("Menu not found with id: " + id));
-    //     existingMenu.setName(updatedMenu.getName());
-    //     existingMenu.setDescription(updatedMenu.getDescription());
-    //     existingMenu.setParent(updatedMenu.getParent());
-    //     return menuRepository.save(existingMenu);
-    // }
+    public Menu updateMenu(Long id, Menu updatedMenu) {
+        Menu existingMenu = menuRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Menu not found with id: " + id));
+        // existingMenu.setName(updatedMenu.getName());
+        // existingMenu.setDescription(updatedMenu.getDescription());
+        // existingMenu.setParent(updatedMenu.getParent());
+        return menuRepository.save(existingMenu);
+    }
 
-    // public void deleteMenu(Long id) {
-    //     if (menuRepository.existsById(id)) {
-    //         menuRepository.deleteById(id);
-    //     } else {
-    //         throw new RuntimeException("Menu not found with id: " + id);
-    //     }
-    // }
+    public void deleteMenu(Long id) {
+        if (menuRepository.existsById(id)) {
+            menuRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Menu not found with id: " + id);
+        }
+    }
 }

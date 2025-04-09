@@ -6,20 +6,25 @@ import lombok.Getter;
 import lombok.Setter; 
 
 @Entity
-@Table(name ="menu")
+@Table(name = "menu")
 @Getter
 @Setter
 public class Menu { 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-    private String name; 
-    private String description; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;   
+    private String name;  
+    private String description;   
 
-    // @OneToMany(mappedBy = "parentMenu", cascade = CascadeType.ALL)
+    @OneToMany 
+    @JoinColumn(name = "submenu")  
     private List<Menu> subMenus;
 
-    // @ManyToOne
-    // @JoinColumn(name = "submenu")
-    private Menu parentMenu;
+    public List<Menu> getSubmenu() {
+        return subMenus;
+    }
+
+    public void setSubmenu(List<Menu> subMenus) {
+        this.subMenus = subMenus;
+    }
 }
