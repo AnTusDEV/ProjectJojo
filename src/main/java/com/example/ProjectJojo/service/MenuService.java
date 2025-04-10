@@ -19,16 +19,7 @@ public class MenuService {
 
     public Menu createMenu(Menu menu) {
         return menuRepository.save(menu);
-    }
-
-    public Menu updateMenu(Long id, Menu updatedMenu) {
-        Menu existingMenu = menuRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Menu not found with id: " + id));
-        // existingMenu.setName(updatedMenu.getName());
-        // existingMenu.setDescription(updatedMenu.getDescription());
-        // existingMenu.setParent(updatedMenu.getParent());
-        return menuRepository.save(existingMenu);
-    }
+    } 
 
     public void deleteMenu(Long id) {
         if (menuRepository.existsById(id)) {

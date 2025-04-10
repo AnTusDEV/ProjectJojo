@@ -35,12 +35,7 @@ public class MenuController {
     @PostMapping
     public Menu createMenu(@RequestBody Menu menu) {
         return menuService.createMenu(menu);
-    }
-
-    @PutMapping("/{id}")
-    public Menu updateMenu(@PathVariable Long id, @RequestBody Menu menu) {
-        return menuService.updateMenu(id, menu);
-    }
+    } 
 
     @DeleteMapping("/{id}")
     public String deleteMenu(@PathVariable Long id) {
